@@ -1,0 +1,51 @@
+#include <stdio.h>
+
+// Função recursiva para divisão
+void dividir(int x, int y, int *quociente, int *resto) {
+    // Caso base: se x for menor que y, a divisão termina
+    if (x < y) {
+        if (resto != NULL) { // Verifica se o ponteiro do resto não é nulo
+            *resto = x; // O resto é o valor de x
+        }
+        return; // Retorna sem modificar o quociente
+    }
+    
+    // Aumenta o quociente e subtrai y de x
+    (*quociente)++;
+    dividir(x - y, y, quociente, resto); // Chamada recursiva
+}
+
+int main() {
+    int x, y;
+    int quociente = 0;
+    int resto = 0; // Inicializa o resto
+
+    printf("Digite o valor de x: ");
+    scanf("%d", &x);
+    printf("Digite o valor de y: ");
+    scanf("%d", &y);
+
+    // Certifique-se de que y não seja zero
+    if (y == 0) {
+        printf("Erro: divisão por zero não é permitida.\n");
+        return 1;
+    }
+
+    // Pergunta ao usuário se deseja calcular o resto
+    char qrResto;
+    printf("Deseja calcular o resto? (s/n): ");
+    scanf(" %c", &qrResto); // O espaço antes de %c ignora espaços em branco
+
+    // Chama a função de divisão
+    if (qrResto == 's' || qrResto == 'S') {
+        dividir(x, y, &quociente, &resto); // Passa o ponteiro para o resto
+        printf("Quociente: %d\n", quociente);
+        printf("Resto: %d\n", resto);
+    } else {
+        dividir(x, y, &quociente, NULL); // Passa NULL para o resto
+        printf("Quociente: %d\n", quociente);
+    }
+
+    return 0;
+}
+
